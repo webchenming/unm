@@ -1,0 +1,21 @@
+{
+  "npm": {
+    "value": "https://registry.npmjs.org/",
+    "current": true
+  },
+  "cnpm": {
+    "value": "http://r.cnpmjs.org/"
+  },
+  "taobao": {
+    "value": "https://registry.npm.taobao.org/"
+  },
+  "nj": {
+    "value": "https://registry.nodejitsu.com/"
+  },
+  "npmMirror": {
+    "value": "https://skimdb.npmjs.com/registry/"
+  },
+  "edunpm": {
+    "value": "http://registry.enpmjs.org/"
+  }
+}

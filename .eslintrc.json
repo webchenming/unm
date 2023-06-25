@@ -1,0 +1,6 @@
+{
+  "extends": "@webchen",
+  "rules": {
+    "curly": ["error", "all"]
+  }
+}

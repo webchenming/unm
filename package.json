@@ -1,0 +1,72 @@
+{
+  "name": "unm",
+  "version": "0.0.1",
+  "description": "User And NPM Origin Management Utils",
+  "author": "chenming",
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "unm": "./bin/index.js"
+  },
+  "repository": {
+    "type": "gitee",
+    "url": ""
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "keywords": [
+    "unm",
+    "npm",
+    "publish",
+    "user",
+    "account",
+    "manager",
+    "utils",
+    "access tokens"
+  ],
+  "scripts": {
+    "bumpp": "bumpp",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "dev": "rollup -cw --bundleConfigAsCjs",
+    "build": "rollup -c --bundleConfigAsCjs",
+    "postinstall": "node ./bin/script.js"
+  },
+  "dependencies": {
+    "cac": "^6.7.14",
+    "colors": "^1.4.0",
+    "commander": "^8.3.0",
+    "consola": "^3.1.0",
+    "ini": "^4.1.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-terser": "^0.4.1",
+    "@rollup/plugin-typescript": "^11.1.0",
+    "@types/ini": "^1.3.31",
+    "@types/lodash": "^4.14.195",
+    "@types/node": "^18.15.11",
+    "@vitest/ui": "^0.30.1",
+    "@webchen/eslint-config": "^0.0.14",
+    "bumpp": "^9.1.0",
+    "esbuild": "^0.17.18",
+    "eslint": "^8.38.0",
+    "rimraf": "^5.0.0",
+    "rollup": "^3.21.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-node-externals": "^5.1.2",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "typescript": "^5.1.3",
+    "vite": "^4.3.5",
+    "vitest": "^0.30.0"
+  }
+}
