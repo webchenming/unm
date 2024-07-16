@@ -1,7 +1,7 @@
 {
   "name": "unm",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "chenming",
   "description": "user token and npm registry management tool",
   "type": "module",
@@ -14,7 +14,7 @@
     "registry"
   ],
   "files": [
-    "bin",
+    "dist",
     "README.md",
     "package.json"
   ],
