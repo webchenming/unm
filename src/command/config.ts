@@ -1,75 +1,41 @@
-import { writeFile } from 'node:fs/promises'
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
-import { parse, stringify } from 'ini'
-import { get, mapValues } from 'lodash'
+import chalk from "chalk";
+import consola from "consola";
+import { homedir } from "os";
+import { resolve } from "path";
+import { parse, stringify } from "ini";
+import { existsSync, writeFileSync, readFileSync } from "fs";
 
-import { log } from '../utils'
-import { lang, langKeys } from '../lang'
-import { KEYS_ENUM, config, paths } from '../constant'
-import type { ConfigRes, LangKey, MessageKey, Name } from '../types'
-/**
- * 初始配置文件
- */
-export function initConfig() {
-  mapValues(paths, async (path) => {
-    if (!existsSync(path)) {
-      const isPath = path.includes(KEYS_ENUM.CONFIG_NAME)
-      const content = isPath ? stringify(config) : ''
-      await writeFile(path, content, 'utf-8')
-    }
-  })
-}
+import { t } from "../utils";
+import { UNM_CONFIG } from "../config";
+import type { Npmrc, Unmrc } from "../types/config";
 
-/**
- * 设置配置文件
- * @param name Name
- * @param config Config
- */
-export function setConfig<N extends Name>(name: N, config: ConfigRes<N>) {
-  if (name && config) {
-    writeFileSync(paths[name], stringify(config), 'utf-8')
+const npmrcPath = resolve(homedir(), ".npmrc");
+const unmrcPath = resolve(homedir(), ".unmrc");
+
+// 初始化配置文件
+export function initConfig(force: boolean) {
+  if (!existsSync(unmrcPath) || force) {
+    setUnmrc(UNM_CONFIG);
+    consola.log(chalk.green(unmrcPath, t("IS")));
+  }
+  if (!existsSync(npmrcPath)) {
+    setNpmrc({});
+    consola.log(chalk.green(npmrcPath, t("IS")));
   }
 }
 
-/**
- * 获取配置文件
- * @param name Name
- * @returns ConfigRes<Config | { [key:string]: any }>
- */
-export function getConfig<N extends Name>(name: N) {
-  const content = readFileSync(paths[name], 'utf-8')
-  return parse(content) as ConfigRes<N>
+// 操作 .npmrc 文件
+export function getNpmrc() {
+  return parse(readFileSync(npmrcPath, "utf-8")) as Npmrc;
+}
+export function setNpmrc(config: Npmrc) {
+  writeFileSync(npmrcPath, stringify(config), "utf-8");
 }
 
-/**
- * 获取信息
- * @param key Message Key
- * @returns string
- */
-export function getMessage(key: MessageKey) {
-  const config = getConfig(KEYS_ENUM.CONFIG_NAME)
-  return get(lang, [config.lang, key])
+// 操作 .unmrc 文件
+export function getUnmrc() {
+  return parse(readFileSync(unmrcPath, "utf-8")) as Unmrc;
 }
-
-/**
- * 重置设置
- */
-export function resetConfig() {
-  setConfig(KEYS_ENUM.CONFIG_NAME, config)
-  log.success(getMessage('reset_config'))
-}
-
-/**
- * 设置语言
- * @param lang 语言
- */
-export function setLang(lang: LangKey) {
-  if (langKeys.includes(lang)) {
-    const config = getConfig(KEYS_ENUM.CONFIG_NAME)
-    setConfig(KEYS_ENUM.CONFIG_NAME, { ...config, lang })
-    log.success(`${getMessage('switch_1')} ${lang}`)
-  }
-  else {
-    log.error(getMessage('lang_1'))
-  }
+export function setUnmrc(config: Unmrc) {
+  writeFileSync(unmrcPath, stringify(config), "utf-8");
 }
